@@ -1,0 +1,2 @@
+@extends('layouts.admin', ['title' => 'Add Supplier'])
+@section('content')<div class="module-head"><div><h2 class="module-title">Add Supplier</h2><div class="module-note">Register a new vendor</div></div></div><div class="form-shell"><form method="POST" action="{{ route('suppliers.store') }}">@csrf @include('suppliers.form')<div class="mt-4 d-flex gap-2"><button class="btn-primaryx">Save Supplier</button><a href="{{ route('suppliers.index') }}" class="btn btn-light small-btn" style="border:1px solid #bab6b6">Cancel</a></div></form></div>@endsection

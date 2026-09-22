@@ -1,0 +1,8 @@
+@extends('layouts.admin', ['title' => 'Record Issuance'])
+@section('content')<div class="module-head"><div><h2 class="module-title">Record Issuance</h2><div class="module-note">Release approved requests to requesting departments</div></div></div><div class="form-shell"><form method="POST" action="{{ route('issuances.store') }}">@csrf<div class="row g-3"><div class="col-md-6"><label class="form-label">Approved Requisition</label><select name="requisition_id" class="form-select" required>@foreach($requisitions as $requisition)
+@php
+  $itemNames = $requisition->items->map(fn($ri) => ($ri->item->name ?? 'Item').' (x'.$ri->quantity_approved.')')->implode(', ');
+  $requestorName = $requisition->user->name ?? $requisition->requested_by_name ?? 'Unknown';
+@endphp
+<option value="{{ $requisition->id }}">Items: {{ $itemNames ?: 'N/A' }} — Requested by: {{ $requestorName }} — {{ $requisition->requisition_no }}</option>
+@endforeach</select></div><div class="col-md-6"><label class="form-label">Received By</label><select name="received_by" class="form-select" required>@foreach($users as $user)<option value="{{ $user->id }}">{{ $user->name }}</option>@endforeach</select></div><div class="col-12"><label class="form-label">Remarks</label><textarea name="remarks" class="form-control" rows="4"></textarea></div></div><div class="mt-4 d-flex gap-2"><button class="btn-primaryx">Save Issuance</button><a href="{{ route('issuances.index') }}" class="btn btn-light small-btn" style="border:1px solid #bab6b6">Cancel</a></div></form></div>@endsection
